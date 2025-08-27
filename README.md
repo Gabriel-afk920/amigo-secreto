@@ -1,61 +1,43 @@
 # 🎁 Amigo Secreto — Projeto Web
 
-## 📌 Visão Geral
-Este é um projeto simples em **HTML, CSS e JavaScript** que permite cadastrar participantes e realizar o sorteio de um **Amigo Secreto** diretamente no navegador.  
-Não há necessidade de servidor ou dependências externas: basta abrir o arquivo `index.html`.
+## Visão Geral
+Aplicação web em **JavaScript Vanilla** para cadastrar participantes e realizar o sorteio de um **Amigo Secreto** no próprio navegador. O estado é mantido em memória por um array (`amigos`); não há backend nem dependências obrigatórias.
 
----
+## Como Executar
+1. Mantenha `index.html`, `style.css` e `app.js` na **mesma pasta**.  
+2. Abra `index.html` em um navegador moderno (Chrome, Edge, Firefox, Safari).  
+3. Digite um nome no campo e clique **Adicionar** (ou pressione **Enter**).  
+4. Clique **Sortear amigo** para exibir o resultado.  
+5. Use **Reiniciar** para limpar lista, resultado e restaurar o título.
 
-## 📂 Estrutura do Projeto
+## Estrutura
+├── index.html # Estrutura da página (input, listas, botões)
+├── style.css # Estilos (cores, layout, tipografia, botões e listas)
+└── app.js # Lógica: cadastro, atualização da lista, sorteio e reinício
 
----
+## Elementos/IDs necessários (HTML)
+- Campo de entrada: `#amigo`  
+- Lista de participantes: `#listaAmigos`  
+- Lista de resultado (com aria-live): `#resultado`  
+- Botões que chamam: `adicionarAmigo()`, `sortearAmigo()`, `reiniciarJogo()`  
 
-## 🚀 Como Executar
-1. Baixe/clique no arquivo **`index.html`**.  
-2. Abra em um navegador moderno (Chrome, Firefox, Edge, Safari).  
-3. Digite os nomes dos participantes no campo de entrada e clique em **Adicionar**.  
-4. Após cadastrar os nomes, clique em **Sortear amigo** para obter o resultado.  
+## Funcionalidades
+- **Cadastro com validação** (`adicionarAmigo`): bloqueia nomes vazios com alerta **"Por favor, insira um nome."**, insere no array com `.push()`, limpa e mantém o foco no campo.  
+- **Atualização de lista** (`atualizarLista`): seleciona `#listaAmigos`, limpa com `innerHTML = ''` e cria um `<li>` para cada nome do array.  
+- **Sorteio aleatório** (`sortearAmigo`): impede execução com array vazio, gera índice por `Math.random()` + `Math.floor()` e exibe o sorteado em `#resultado`.  
+- **Reinício** (`reiniciarJogo`): esvazia o array, limpa interface e reexibe “Amigo Secreto”.  
+- **Atalho de teclado**: **Enter** no campo adiciona o nome.  
+- **Voz (opcional)**: se `responsiveVoice` estiver disponível, os textos são narrados.
 
----
+## Estilo (CSS)
+- Paleta e variáveis: `--color-primary`, `--color-secondary`, `--color-button`, `--color-button-hover` etc.  
+- Layout centralizado, header com título e imagem; seção de entrada com bordas e cantos arredondados.  
+- Campos e botões com bordas arredondadas e estados de hover; destaque visual para o botão **Sortear**.  
+- Listas sem marcadores; **resultado** em fonte maior e cor de destaque.
 
-## ⚙️ Funcionalidades
-
-### 🔹 HTML
-- Estrutura organizada com **`<header>`, `<main>` e `<section>`**.  
-- Campo de entrada e botão **Adicionar** para cadastrar nomes.  
-- Lista `#listaAmigos` exibe todos os participantes.  
-- Área `#resultado` mostra o sorteio, com suporte a leitores de tela (`aria-live="polite"`).  
-- Botão de **Sortear amigo** com ícone e destaque visual.  
-
-### 🔹 JavaScript
-- **Gerenciamento de participantes:**  
-  - Função `adicionarAmigo()` valida e adiciona nomes em um array.  
-  - `atualizarLista()` atualiza dinamicamente a lista no HTML.  
-  - `limparCampo()` reseta o campo de entrada.  
-
-- **Sorteio:**  
-  - Função `sortearAmigo()` seleciona aleatoriamente um nome da lista.  
-  - Impede sorteio sem participantes.  
-  - Exibe o resultado em `#resultado`.  
-
-- **Experiência do Usuário:**  
-  - Pressionar **Enter** adiciona um novo participante rapidamente.  
-  - `limparResultado()` remove resultados antigos ao inserir novos nomes.  
-  - `reiniciarJogo()` zera lista e resultado.  
-  - Se a biblioteca `responsiveVoice` estiver disponível, o sorteio é narrado por voz.  
-
----
-
-## 🎨 Estilo (CSS)
-- **Layout responsivo** com Flexbox.  
-- **Cores e variáveis** centralizadas no `:root`.  
-- **Tipografia**: Google Fonts (`Inter` para texto, `Merriweather` para títulos).  
-- **Interatividade**: botões com `hover`, espaçamentos consistentes e sombras leves.  
-
----
-
-## ♿ Acessibilidade
-- Uso de `aria-live` para leitura automática do sorteio.  
-- Listas com `role="list"`.  
-- Compatibilidade com leitores de tela.  
-
+## Testes rápidos
+- **Adicionar vazio** → alerta **"Por favor, insira um nome."**  
+- **Adicionar nomes** → aparecem em `#listaAmigos`; campo limpa e mantém foco.  
+- **Sortear sem nomes** → alerta **"Adicione pelo menos um nome antes de sortear."**  
+- **Sortear com nomes** → `#resultado` exibe “O amigo secreto sorteado é: …”.  
+- **Reiniciar** → limpa lista e resultado; restaura o título.
